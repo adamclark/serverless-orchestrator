@@ -47,6 +47,24 @@ You can then execute your native executable with: `./target/job-orchestrator-1.0
 
 If you want to learn more about building native executables, please consult https://quarkus.io/guides/maven-tooling.
 
+## Deploying to OpenShift
+
+Note: you must deploy `quarkus-to-upper` as a knative service before deploying this application to OpenShift.
+
+To deploy the application to OpenShift you should first login to OpenShift using the cli:
+
+```
+oc login ...
+oc project <project_name>
+```
+
+Then run a Maven install, the `quarkus-openshift` plugin will build the application image and deploy it it to OpenShift: 
+```
+mvn clean install -Dquarkus.openshift.env.vars.com.example.serverless.restclient.ToUpperService/mp-rest/url=$(kn service describe quarkus-to-upper -o url)
+```
+
+The command above retrives the knative service URL and injects it into the Quarkus application's rest client configuration through an environment variable in the OpenShift deployment.
+
 ## Related Guides
 
 - RESTEasy JAX-RS ([guide](https://quarkus.io/guides/rest-json)): REST endpoint framework implementing JAX-RS and more
