@@ -60,7 +60,7 @@ oc project <project_name>
 
 Then run a Maven install, the `quarkus-openshift` plugin will build the application image and deploy it it to OpenShift: 
 ```
-mvn clean install -Dquarkus.openshift.env.vars.com.example.serverless.restclient.ToUpperService/mp-rest/url=$(kn service describe quarkus-to-upper -o url)
+mvn clean install -Dquarkus.openshift.env.vars.to-upper-service-url=$(kn service describe quarkus-to-upper -o url)
 ```
 
 The command above retrives the knative service URL and injects it into the Quarkus application's rest client configuration through an environment variable in the OpenShift deployment.
